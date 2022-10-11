@@ -1,41 +1,40 @@
-import { OrderType } from "src/types/order"
+import date from 'date-and-time';
 
-export default function Counters({data}: any) {
-    const daysSinceLastOrder = 3
+export default function Counters({props}: any) {
+
+    const diff = Math.floor(date.subtract(new Date(), props.latestDate).toDays())
+    const perDaySpend = props.total / (Math.floor(date.subtract(props.latestDate, props.firstDate).toDays()))
+    const moneySaved = perDaySpend * diff
 
     return (
         <div className="flex flex-col">
-            <div className="flex flex-col justify-center mb-5 text-3xl">
-                <div className="flex flex-row justify-around p-4">
-                    <p className="p-4">
+            <div className="flex flex-row justify-center p-4 mb-5 text-3xl">
+                <div className="flex flex-col p-4">
+                    <p>
                         Days since last order
                     </p>
-                    <p className="p-4">
-                        {daysSinceLastOrder}
+                    <p>
+                        Total money spent
                     </p>
-                </div>
-                <div className="flex flex-row justify-around p-4">
-                    <p className="p-4">
+                    <p>
+                        Money spend per day
+                    </p>
+                    <p>
                         Money saved
                     </p>
-                    <p className="p-4">
-                        {daysSinceLastOrder}
-                    </p>
                 </div>
-                <div className="flex flex-row justify-around p-4">
-                    <p className="p-4">
-                        Average day spending
+                <div className="flex flex-col p-4">
+                    <p>
+                        {diff}
                     </p>
-                    <p className="p-4">
-                        {daysSinceLastOrder}
+                    <p>
+                        {props.total}
                     </p>
-                </div>
-                <div className="flex flex-row justify-around p-4">
-                    <p className="p-4">
-                        Money used
+                    <p>
+                        {perDaySpend}
                     </p>
-                    <p className="p-4">
-                        {daysSinceLastOrder}
+                    <p>
+                        {moneySaved}
                     </p>
                 </div>
             </div>
