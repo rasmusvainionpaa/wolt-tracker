@@ -5,18 +5,17 @@ export default function lastOrder(orders: OrderType[]) {
     let latest = new Date
 
     if(orders[0] === undefined || orders[0] === null) {
-        return latest
+        return latest.toString()
     }
 
     latest = orders[0].Ordered
     let temp: Date
     for(var i = 1; i < orders.length; i++) {
         temp = orders[i].Ordered
-        if(temp.getDate() > latest.getDate()) {
+        if(temp > latest) {
             latest = orders[i].Ordered
         }
     }
     
-    console.log(typeof(latest))
-    return latest
+    return latest.toString()
 }
