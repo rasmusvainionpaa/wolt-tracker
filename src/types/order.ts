@@ -1,6 +1,6 @@
-export type Order = {
+export type OrderType = {
     Store: string,
     Price: number,
-    Ordered: string,
+    Ordered: Date,
     OrderType: string
 }
