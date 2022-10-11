@@ -1,13 +1,14 @@
 import type { NextPage } from 'next'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import Layout from 'src/components/Layout'
-import { Order } from 'src/types/order'
+import { OrderType } from 'src/types/order'
 
 const Add: NextPage = () => {
-    const [orders, setOrders] = useState<Order[]>([])
+    const [orders, setOrders] = useState<OrderType[]>([])
     const [store, setStore] = useState<string>("")
     const [price, setPrice] = useState<string>("")
-    const [date, setDate] = useState<string>("")
+    const [date, setDate] = useState<Date>(new Date())
     const [orederType, setOrderType] = useState<string>("")
 
     useEffect(() => {
@@ -16,18 +17,17 @@ const Add: NextPage = () => {
  
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
-        const order: Order = {
+        const order: OrderType = {
             Store: store,
             Price: Number(price),
             Ordered: date,
             OrderType: orederType
         }
 
-        let tempOrder : Order[] = orders
+        let tempOrder : OrderType[] = orders
         tempOrder.push(order)
 
         localStorage.setItem("orders", JSON.stringify(tempOrder))
-        console.log(orders)
     }
 
     const handleStoreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ const Add: NextPage = () => {
         setPrice(event.target.value)
     }
 
-    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDateChange = (event: any) => {
         setDate(event.target.value)
     }
 
@@ -48,28 +48,36 @@ const Add: NextPage = () => {
 
     return (
         <Layout>
+
+            <div className="flex flex-row mb-5 text-3xl">
+                <Link href="/">
+                    <a>Orders / </a>
+                </Link>
+                <h1 className='ml-2'>Add</h1>
+            </div>
+            
             <div className="flex justify-center">
                 <form className="flex justify-center w-2/6" onSubmit={handleSubmit}>
                     <ul className="flex flex-col">
-                        <li className="pl-4 p-1">
+                        <li className="p-1">
                             <label>Store</label>
                         </li>
-                        <li className="pl-4">
+                        <li className="">
                             <input type="text" className="border-2 rounded-lg" name="store" onChange={handleStoreChange} />
                         </li>
-                        <li className="pl-4">
+                        <li className="">
                             <label>Price</label>
                         </li>
-                        <li className="pl-4">
+                        <li className="">
                             <input type="number" className="border-2 rounded-lg" name="price" onChange={handlePriceChange} />
                         </li>
-                        <li className="pl-4">
+                        <li className="">
                             <label>Ordered</label>
                         </li>
-                        <li className="pl-4">
+                        <li className="">
                             <input type="datetime-local" className="border-2 rounded-lg" name="date" onChange={handleDateChange} />
                         </li>
-                        <li className="pl-4">
+                        <li className="">
                             <p>Type of order</p>
                             <select onChange={handleOrderTypeChange}>
                                 <option>Store</option>
