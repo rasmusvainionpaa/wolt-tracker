@@ -38,8 +38,8 @@ const Add: NextPage = () => {
         setPrice(event.target.value)
     }
 
-    const handleDateChange = (event: any) => {
-        setDate(event.target.value)
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setDate(new Date(event.target.value))
     }
 
     const handleOrderTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
