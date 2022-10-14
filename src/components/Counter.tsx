@@ -2,9 +2,13 @@ import date from 'date-and-time';
 
 export default function Counters({props}: any) {
 
-    const diff = Math.floor(date.subtract(new Date(), props.latestDate).toDays())
-    const perDaySpend = props.total / (Math.floor(date.subtract(props.latestDate, props.firstDate).toDays()))
-    const moneySaved = perDaySpend * diff
+    //const diff = Math.floor(date.subtract(new Date(), props.latestDate).toDays())
+    //const perDaySpend = props.total / (Math.floor(date.subtract(props.latestDate, props.firstDate).toDays()))
+    //const moneySaved = perDaySpend * diff
+
+    const diff = 3
+    const perDaySpend = 3
+    const moneySaved = 5
 
     return (
         <div className="flex flex-col">
@@ -28,7 +32,7 @@ export default function Counters({props}: any) {
                         {diff}
                     </p>
                     <p>
-                        {props.total}
+                        {3}
                     </p>
                     <p>
                         {perDaySpend}
