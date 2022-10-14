@@ -5,7 +5,7 @@ import Layout from 'src/components/Layout'
 import Order from 'src/components/Order'
 import { OrderType } from 'src/types/order'
 import countTotal from 'src/utils/countTotal'
-import firstOder from 'src/utils/firstorder'
+import firstOder from 'src/utils/firstOrder'
 import lastOrder from 'src/utils/lastOrder'
 
 const Home: NextPage = () => {
