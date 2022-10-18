@@ -29,7 +29,7 @@ const Home: NextPage = () => {
       <h1 className="mb-5 text-3xl">Orders</h1>
       <Counters data={orders} firstDate={firstDate} latestDate={latestDate} total={totalSpend} />
       <div className='flex justify-center'>
-        { orders.length < 1 ? <p>Loading...</p> :
+        { orders.length < 1 ? <p>yeet</p> :
           <ul className='flex flex-col'>
             {orders.map((ordered, index) => (
               <li key={index} className="">
