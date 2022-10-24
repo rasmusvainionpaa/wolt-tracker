@@ -19,15 +19,13 @@ export default function Navbar() {
         </ul>
       </div>
 
-      <div>
       <ul className="flex flex-row">
-          <li>
-            <Link href="/settings">
-              <a className="block p-4">Settings</a>
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
+        <li>
+          <Link href="/settings">
+            <a className="block p-4">Settings</a>
+          </Link>
+        </li>
+      </ul>
+    </nav>  
   );
 }

@@ -1,97 +1,112 @@
-import type { NextPage } from 'next'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
-import Layout from 'src/components/Layout'
-import { OrderType } from 'src/types/order'
+import type { NextPage } from "next";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import Layout from "src/components/Layout";
+import { OrderType } from "src/types/order";
 
 const Add: NextPage = () => {
-    const [orders, setOrders] = useState<OrderType[]>([])
-    const [store, setStore] = useState<string>("")
-    const [price, setPrice] = useState<string>("")
-    const [date, setDate] = useState<Date>(new Date())
-    const [orederType, setOrderType] = useState<string>("")
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<OrderType>();
 
-    useEffect(() => {
-        setOrders(JSON.parse(localStorage.getItem("orders") || "[]"))
-    }, [])
- 
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault()
-        const order: OrderType = {
-            Store: store,
-            Price: Number(price),
-            Ordered: date,
-            OrderType: orederType
-        }
+  console.log(watch("price")); // watch input value by passing the name of it
 
-        let tempOrder : OrderType[] = orders
-        tempOrder.push(order)
+  const [orders, setOrders] = useState<OrderType[]>([]);
 
-        localStorage.setItem("orders", JSON.stringify(tempOrder))
-    }
+  useEffect(() => {
+    setOrders(JSON.parse(localStorage.getItem("orders") || "[]"));
+  }, []);
 
-    const handleStoreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setStore(event.target.value)
-    }
+  const onSubmit: SubmitHandler<OrderType> = (data) => {
+    console.log(data);
+    const tempOrder: OrderType[] = [...orders, data];
 
-    const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPrice(event.target.value)
-    }
+    localStorage.setItem("orders", JSON.stringify(tempOrder));
+    setOrders(tempOrder);
+    console.log(orders);
+  };
 
-    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setDate(new Date(event.target.value))
-    }
+  return (
+    <Layout>
+      <div className="mb-5 flex flex-row text-3xl">
+        <h1 className="ml-2">
+          <Link href="/">Orders /</Link>Add
+        </h1>
+      </div>
 
-    const handleOrderTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setOrderType(event.target.value)
-    }
+      <div className="flex flex-col justify-center">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mb-10 flex w-full flex-col items-start bg-blue-100 p-10"
+        >
+          <div className="mb-4 flex w-1/2 flex-col">
+            <label htmlFor="store">Store</label>
+            <input
+              id="store"
+              className="w-full"
+              defaultValue="K-market"
+              {...register("store", { required: true })}
+            />
+            {errors.store && (
+              <span className="text-red-400">This field is required</span>
+            )}
+          </div>
 
-    return (
-        <Layout>
+          <div className="mb-4 flex w-1/2 flex-col">
+            <label htmlFor="price">Price</label>
+            <input
+              id="price"
+              className="w-full"
+              type="number"
+              {...register("price", { required: true })}
+            />
+            {errors.price && (
+              <span className="text-red-400">This field is required</span>
+            )}
+          </div>
 
-            <div className="flex flex-row mb-5 text-3xl">
-                <Link href="/">
-                    <a>Orders / </a>
-                </Link>
-                <h1 className='ml-2'>Add</h1>
-            </div>
-            
-            <div className="flex justify-center">
-                <form className="flex justify-center w-2/6" onSubmit={handleSubmit}>
-                    <ul className="flex flex-col">
-                        <li className="p-1">
-                            <label>Store</label>
-                        </li>
-                        <li className="">
-                            <input type="text" className="border-2 rounded-lg" name="store" onChange={handleStoreChange} />
-                        </li>
-                        <li className="">
-                            <label>Price</label>
-                        </li>
-                        <li className="">
-                            <input type="number" className="border-2 rounded-lg" name="price" onChange={handlePriceChange} />
-                        </li>
-                        <li className="">
-                            <label>Ordered</label>
-                        </li>
-                        <li className="">
-                            <input type="datetime-local" className="border-2 rounded-lg" name="date" onChange={handleDateChange} />
-                        </li>
-                        <li className="">
-                            <p>Type of order</p>
-                            <select onChange={handleOrderTypeChange}>
-                                <option>Store</option>
-                                <option>Restaurant</option>
-                            </select>
-                        </li>
-                        <li className="p-4 flex justify-center">
-                            <button className="border-2 rounded-lg p-1" type="submit">Submit</button>
-                        </li>
-                    </ul>
-                </form>
-            </div>
-        </Layout>
-    )
-}
+          <div className="mb-4 flex w-1/2 flex-col">
+            <label htmlFor="ordertype">Order type</label>
+            <select
+              id="ordertype"
+              {...register("order_type", { required: true })}
+            >
+              <option value="store">Store</option>
+              <option value="restaurant">Restaurant</option>
+            </select>
 
-export default Add
+            {errors.order_type && (
+              <span className="text-red-400">This field is required</span>
+            )}
+          </div>
+
+          <div className="mb-4 flex w-1/2 flex-col">
+            <label htmlFor="ordered_at">Price</label>
+            <input
+              id="ordered_at"
+              className="w-full"
+              type="date"
+              {...register("ordered_at", { required: true })}
+            />
+            {errors.price && (
+              <span className="text-red-400">This field is required</span>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className={"flex rounded bg-blue-500 px-2 py-1 text-white"}
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </Layout>
+  );
+};
+
+export default Add;
