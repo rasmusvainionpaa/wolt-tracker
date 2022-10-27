@@ -7,12 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
+model Order {
   id         Int      @id @default(autoincrement())
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   store      String   @db.VarChar(255)
-  price      String
-  ordered_at DateTime
+  price      Float
+  ordered_at String
   order_type String
 }
