@@ -1,6 +1,7 @@
 export type OrderType = {
-    Store: string,
-    Price: number,
-    Ordered: Date,
-    OrderType: string
+  id?: number
+  store: string,
+  price: number,
+  ordered_at: string,
+  order_type: string
 }

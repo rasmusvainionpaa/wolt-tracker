@@ -11,9 +11,6 @@ const Settings: NextPage = () => {
           </Link>
           <h1 className='ml-2'>Settings</h1>
       </div>
-      <div>
-
-      </div>
     </Layout>
   )
 }
