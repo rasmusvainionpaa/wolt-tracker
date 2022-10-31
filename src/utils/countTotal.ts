@@ -6,5 +6,5 @@ export default function countTotal(orders: OrderType[]) {
     total = order.price + total
   })
   
-  return total
+  return Math.round(total * 100) / 100
 }
