@@ -5,57 +5,55 @@ import Layout from "src/components/Layout";
 import Link from "next/link";
 
 type Props = {
-    order: OrderType;
+  order: OrderType;
 };
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-    const orderRaw = await prisma.order.findUnique({
-        where: {
-            id: parseInt(context?.query.id as string, 10),
-        },
-    });
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const orderRaw = await prisma.order.findUnique({
+    where: {
+      id: parseInt(context?.query.id as string, 10),
+    },
+  });
 
-    if (!orderRaw) {
-        return {
-          redirect:{
-          destination: "/",
-          permanent: false,
-          }
-        };
-    }
-
-    const order = JSON.parse(JSON.stringify(orderRaw))
-
+  if (!orderRaw) {
     return {
-        props: {order}
-    }
-}
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 
-const Home: NextPage<Props> = ({order}) => {
-    console.log(order)
-    return (
-        <Layout>
+  const order = JSON.parse(JSON.stringify(orderRaw));
 
-            <div className="mb-5 flex flex-row text-3xl">
-                <h1 className="ml-2">
-                    <Link href="/">Orders / </Link>{order.id}
-                </h1>
-            </div>
+  return {
+    props: { order },
+  };
+};
 
-            <div className="flex flex-col">
-                <div>
-                    <h1>
-                        Store: {order.store}
-                    </h1>
-                </div>
-                <div>
-                    <p>
-                        Price: {order.price}
-                    </p>
-                </div>
-            </div>
-        </Layout>
-    )
-}
+const Home: NextPage<Props> = ({ order }) => {
+  console.log(order);
+  return (
+    <Layout>
+      <div className="mb-5 flex flex-row text-3xl">
+        <h1 className="ml-2">
+          <Link href="/">Orders / </Link>
+          {order.id}
+        </h1>
+      </div>
+
+      <div className="flex flex-col">
+        <div>
+          <h1>Store: {order.store}</h1>
+        </div>
+        <div>
+          <p>Price: {order.price}</p>
+        </div>
+      </div>
+    </Layout>
+  );
+};
 
 export default Home;
