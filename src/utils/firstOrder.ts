@@ -1,7 +1,7 @@
 import { OrderType } from "src/types/order"
 
 export default function firstOder(orders: OrderType[]) {
-  let latest = new Date
+  let latest = new Date()
   
   if(orders[0] === undefined || orders[0] === null) {
     return latest
